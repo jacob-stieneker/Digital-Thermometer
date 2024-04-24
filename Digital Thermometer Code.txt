@@ -1,0 +1,39 @@
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(12,11,5,4,3,2);
+byte degree[8] = 
+{
+	0b00011,
+    0b00011,
+    0b00000,
+    0b00000,
+    0b00000,
+    0b00000,
+    0b00000,
+    0b00000
+};
+void setup()
+{
+  pinMode(A0,INPUT);
+  lcd.begin(16,2);
+  lcd.createChar(1, degree);
+  lcd.setCursor(0,0);
+  lcd.print("DIGITAL");
+  lcd.setCursor(0,1);
+  lcd.print("THERMOMETER");
+  delay(3000);
+  lcd.clear();
+}
+void loop()
+{
+  float reading= analogRead(A0);
+  float temp= reading*(5.0/1023.0)*100;
+  delay(10);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("TEMPERATURE");
+  lcd.setCursor(0,1);
+  lcd.print(temp);
+  lcd.write(1);
+  lcd.print("C");
+  delay(500);
+}
